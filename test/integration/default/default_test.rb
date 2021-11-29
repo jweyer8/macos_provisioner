@@ -1,16 +1,7 @@
-# Chef InSpec test for recipe trial_cook::default
-
-# The Chef InSpec reference, with examples and extensive documentation, can be
-# found at https://docs.chef.io/inspec/resources/
-
-unless os.windows?
-  # This is an example test, replace with your own test.
-  describe user('root'), :skip do
-    it { should exist }
-  end
-end
-
-# This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
-end
+# control 'test file' do
+# 	impact 0.1
+# 	desc 'make sure that the test file exists'
+# 	describe file('/home/test.txt') do 
+# 		it { should exist }
+# 	end	
+# end
