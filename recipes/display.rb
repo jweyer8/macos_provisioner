@@ -1,4 +1,4 @@
-dock_plist = 'Users/vagrant/Library/Preferences/com.apple.dock.plist'
+dock_plist = 'com.apple.dock.plist'
 dock_user = 'jweyer'
 
 dock 'add apps to the dock that are commonly used' do
@@ -7,17 +7,25 @@ dock 'add apps to the dock that are commonly used' do
 end
 
 execute 'put the Dock on the left side' do
-    command 'defaults write com.apple.dock.plist orientation right'
+    command "defaults write #{dock_plist} orientation right"
     user dock_user
 end
 
 execute 'increase the tile size' do
-    command 'defaults write com.apple.dock.plist tilesize 100'
+    command "defaults write #{dock_plist} tilesize 100"
     user dock_user
 end
 
-# execute 'change the background picture' do 
-#     command 'osascript -e 'tell application "System Events" set picture to "/Library/Desktop" '
-# end
+set_background 'set background picture' do
+    picture_name 'Hello Bl'
+    solid_color false
+    user 'jweyer'
+    action :set
+end
 
+# set_background 'setup environment to allow for background change' do
+#     user 'jweyer'
+#     action :setup
+#     notifies :set,'set_background[set background picture]', :immediately
+# end
   
