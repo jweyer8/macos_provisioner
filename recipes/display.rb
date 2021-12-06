@@ -1,9 +1,17 @@
 dock_plist = 'com.apple.dock.plist'
 dock_user = 'jweyer'
 
-dock 'add apps to the dock that are commonly used' do
-    admin_user dock_user
+
+dock 'add apps to the dock' do
+    user dock_user
     item_paths ['/System/Applications/Utilities/Terminal.app', '/Applications/Visual\ Studio\ Code.app', '/Applications/Google\ Chrome.app']
+    action :nothing
+end
+
+dock 'clear the dock of all apps (Finder and Trash will be left)' do 
+    user dock_user
+    action :clear
+    notifies :add, 'dock[add apps to the dock]', :immediately
 end
 
 execute 'put the Dock on the left side' do
@@ -26,6 +34,6 @@ end
 set_background 'setup environment to allow for background change' do
     user 'jweyer'
     action :setup
-    notifies :set,'set_background[set background picture]', :immediately
+    notifies :set, 'set_background[set background picture]', :immediately
 end
   
