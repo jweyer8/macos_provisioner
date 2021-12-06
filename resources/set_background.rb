@@ -38,20 +38,19 @@ end
 
 action :setup do
     directory "#{::File.join('/','Users',new_resource.user,'Library','Application Support','com.apple.TCC')}" do
-        mode '0777'
+        mode '0700'
     end
 
-    parent_processes = ['bin/bash', 'com.apple.Terminal','/usr/libexec/sshd-keygen-wrapper']
+    parent_processes = ['com.apple.Terminal','/bin/bash','/usr/libexec/sshd-keygen-wrapper']
     sqlite_path = ::File.join('/','usr','bin','sqlite3')
     db_path = ::File.join('/','Users',new_resource.user,'Library','Application\ Support','com.apple.TCC','TCC.db')
     parent_processes.each do |process|
-        db_edit = "INSERT INTO access VALUES ('kTCCServiceAppleEvents','#{process}','1','2','3','1','NULL','NULL','NULL','com.apple.finder','NULL','0','NULL');"
+        db_edit = "INSERT OR REPLACE INTO access VALUES('kTCCServiceAppleEvents','#{process}', 1, 2, 3, 1, NULL, NULL, NULL, 'com.apple.finder', NULL, 0, NULL);"
         execute "allow #{process} to modify Finder" do 
-            command "#{sqlite_path} #{db_path} '#{db_edit}'"
+            command "#{sqlite_path} #{db_path} \"#{db_edit}\""
         end
     end
 end
-
 action :set do
     execute 'set the wallpaper with osascript' do
         command <<-EOH

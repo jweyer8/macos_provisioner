@@ -20,12 +20,12 @@ set_background 'set background picture' do
     picture_name 'Hello Bl'
     solid_color false
     user 'jweyer'
-    action :set
+    action :nothing
 end
 
-# set_background 'setup environment to allow for background change' do
-#     user 'jweyer'
-#     action :setup
-#     notifies :set,'set_background[set background picture]', :immediately
-# end
+set_background 'setup environment to allow for background change' do
+    user 'jweyer'
+    action :setup
+    notifies :set,'set_background[set background picture]', :immediately
+end
   
