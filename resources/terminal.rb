@@ -1,7 +1,7 @@
 provides :terminal
 default_action :setup
 
-property :user, String
+property :user, String, required: true
 property :aliases, Hash
 
 action_class do
@@ -20,31 +20,39 @@ action_class do
 
     #get existing aliases from bash 
     def existing_profile
-        existing_shortcuts = Mixlib::ShellOut.new("/bin/cat /Users/jweyer/.bash_profile", :user => new_resource.user)
+        existing_shortcuts = Mixlib::ShellOut.new(get_paths('bash'), :user => new_resource.user)
         existing_shortcuts.run_command.stdout
+    end
+
+    #provide the paths 
+    #should probably raise an error if argument is incorrect 
+    def get_paths(name)
+        case name
+        when 'bash'
+            ::File.join('/','Users',new_resource.user,'.bash_profile')
+        when 'terminal'
+            ::File.join('/','Users',new_resource.user,'Library','Preferences','com.apple.Terminal.plist')
+        end
     end
 end
 
-
 action :setup do
-    bash_profile_path = ::File.join('/','Users',new_resource.user,'.bash_profile')
-    terminal_plist_path = ::File.join('/','Users',new_resource.user,'Library','Preferences','com.apple.Terminal.plist')
-
     execute 'make bash the default shell' do
-        command 'sudo chsh -s /bin/bash'
+        command 'chsh -s /bin/bash'
         user new_resource.user
+        input 'password'
     end
 
     #set bg and fg preferences in terminal plist
     plist 'change terminal default settings' do 
-        path terminal_plist_path
+        path get_paths('terminal')
         entry 'Startup Window Settings'
         value 'Silver Aerogel'
         owner new_resource.user
     end
     
     file 'Create a .bash_profile' do
-        path "#{bash_profile_path}"
+        path "#{get_paths('bash')}"
         owner new_resource.user
         mode '0755'
         content create_contents
