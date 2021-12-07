@@ -1,7 +1,7 @@
 plist 'set mouse scroll direction' do 
     path '/Users/jweyer/Library/Preferences/.GlobalPreferences.plist'
     entry 'com.apple.swipescrolldirection'
-    value  0
+    value 1
     owner 'jweyer'
 end
 

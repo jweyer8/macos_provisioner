@@ -1,11 +1,8 @@
-terminal_plist = '/Users/jweyer/Library/Preferences/com.apple.terminal.plist'
 default_browser = {name: 'Google', id: 'com.google.www'}
 
-plist 'change terminal default settings' do 
-    path terminal_plist
-    entry 'Startup Window Settings'
-    value 'Pro'
-    owner 'jweyer'
+terminal 'Setup terminal preferecnes' do
+    user 'jweyer'
+    aliases ({'opengc' => 'open -a "Google Chrome"', 'celar' => 'clear'})
 end
 
 execute 'set chrome as default browser' do
