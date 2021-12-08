@@ -1,4 +1,4 @@
-# trial_cook
+# Personal macos workstation provisioner
 
-TODO: Enter the cookbook description here.
+provisions macos to my personal preferences via chef code 
 

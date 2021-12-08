@@ -20,11 +20,6 @@ provisioner:
   product_name: chef
   product_version: :latest
 
-verifier:
-  name: inspec
-  inspec_tests:
-    - test/integration/defualt
-
 platforms:
   - name: microsoft/macos-monterey
 

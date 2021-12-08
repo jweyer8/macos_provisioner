@@ -1,5 +1,5 @@
 dock_plist = 'com.apple.dock.plist'
-dock_user = 'jweyer'
+dock_user = node['trial_cook']['user']
 
 
 dock 'add apps to the dock' do
