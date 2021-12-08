@@ -16,16 +16,8 @@ end
 reboot 'reboot system to switch users' do 
     delay_mins 2
     reason 'swich users'
-    only_if { %w(vagrant lab).include? shell_out("stat -f '%Su' /dev/console").stdout.strip }
+    only_if {shell_out("stat -f '%Su' /dev/console").stdout.strip == 'vagrant' }
     action :reboot_now
-    notifies :run, 'ruby_block[stop Chef run before userspace is torn down]', :immediately
-end
-
-ruby_block 'stop Chef run before userspace is torn down' do
-    block do
-      Chef::Application.fatal!('cleanly exiting prior to userspace teardown', 35)
-    end
-    action :nothing
 end
 
 

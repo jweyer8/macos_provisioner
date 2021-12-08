@@ -24,7 +24,7 @@ action_class do
             existing_shortcuts = Mixlib::ShellOut.new(get_paths('bash'))
             existing_shortcuts.run_command.stdout
         else 
-            '#Aliases'
+            "#Aliases\n"
         end
     end
 
