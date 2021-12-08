@@ -5,8 +5,17 @@ driver:
   customize: 
     hypervisor-type: 'apple'
 
+transport:
+  name: ssh
+  connection_retires: 10
+  connection_retry_sleep: 30
+
 provisioner:
   chef_license: accept
+  root_path: /var/tmp/kitchen
+  max_retries: 2
+  retry_on_exit_code:
+    - 35
   name: chef_zero
   product_name: chef
   product_version: :latest

@@ -20,8 +20,12 @@ action_class do
 
     #get existing aliases from bash 
     def existing_profile
-        existing_shortcuts = Mixlib::ShellOut.new(get_paths('bash'), :user => new_resource.user)
-        existing_shortcuts.run_command.stdout
+        if ::File.exist?(get_paths('bash'))
+            existing_shortcuts = Mixlib::ShellOut.new(get_paths('bash'))
+            existing_shortcuts.run_command.stdout
+        else 
+            '#Aliases'
+        end
     end
 
     #provide the paths 
