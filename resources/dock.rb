@@ -1,12 +1,13 @@
 provides :dock
+unified_mode true
 
 property :user, String, required: true
 property :item_paths, [Array, String]
 
 action :clear do
-  execute 'remove all current apps from the doc' do 
-      command "/usr/local/bin/dockutil -v --remove all --allhomes "
-      user new_resource.user
+  execute 'remove all current apps from the doc' do
+    command '/usr/local/bin/dockutil -v --remove all --allhomes '
+    user new_resource.user
   end
 end
 
@@ -19,4 +20,3 @@ action :add do
     sleep 1
   end
 end
-

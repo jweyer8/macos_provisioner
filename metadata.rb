@@ -8,4 +8,3 @@ chef_version '>= 16.0'
 
 depends 'macos'
 depends 'homebrew'
-
